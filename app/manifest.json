@@ -1,0 +1,58 @@
+{
+  	"name": "__MSG_appName__",
+  	"description": "__MSG_appDescription__",
+  	"version": "2",
+  	"manifest_version": 2,
+  	"default_locale": "en",
+  	"permissions": [
+  		"http://mw1.google.com/",
+  		"http://mw2.google.com/",
+  		"https://maps.googleapis.com/",
+  		"http://*.tile.openstreetmap.org/",
+  		{
+  			"fileSystem": [
+  				"write",
+  				"retainEntries",
+  				"directory"
+  			]
+  		},
+  		"geolocation",
+  		{
+  			"mediaGalleries": [
+  				"read",
+  				"delete",
+  				"copyTo",
+  				"allAutoDetected"
+  			]
+  		},
+  		"storage",
+  		"unlimitedStorage",
+  		"webview",
+  		"syncFileSystem"
+  	],
+  	"icons": {
+  		"16": "images/icon-16.png",
+  		"128": "images/icon-128.png"
+  	},
+  	"app": {
+  		"background": {
+  			"scripts": [
+  				"scripts/main.js",
+  				"scripts/chromereload.js"
+  			]
+  		}
+  	},
+  	"webview": {
+  		"partitions": [
+  			{
+  				"name": "map",
+  				"accessible_resources": [
+  					"map.html",
+  					"scripts/map/map.js",
+  					"bower_components/**/*",
+  					"styles/*"
+  				]
+  			}
+  		]
+  	}
+  }

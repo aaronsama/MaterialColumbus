@@ -1,0 +1,82 @@
+<!doctype html>
+<html ng-app="materialColumbus" ng-csp>
+    <head>
+        <meta charset="utf-8">
+        <title>MaterialColumbus</title>
+
+        <link rel="stylesheet" href="bower_components/angular/angular-csp.css" />
+        <!-- build:css styles/vendor.css -->
+        <!-- bower:css -->
+        <link rel="stylesheet" href="bower_components/angular-material/angular-material.css" />
+        <link rel="stylesheet" href="bower_components/ionicons/css/ionicons.css" />
+        <link rel="stylesheet" href="bower_components/leaflet/dist/leaflet.css" />
+        <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
+        <link rel="stylesheet" href="bower_components/Leaflet.awesome-markers/dist/leaflet.awesome-markers.css" />
+        <!-- endbower -->
+        <!-- endbuild -->
+
+        <!-- build:css styles/main.css -->
+        <link rel="stylesheet" href="styles/main.css">
+        <link rel="stylesheet" href="styles/tracks.css">
+        <!-- endbuild -->
+    </head>
+    <body>
+        <md-toolbar ng-controller="SettingsController">
+            <div class="md-toolbar-tools">
+                <span>Material Columbus</span>
+                <!-- fill up the space between left and right area -->
+                <span flex></span>
+                <md-button md-no-ink id="settings" ng-click="selectTracklogsDir()">
+                    <i class="ion-android-settings"></i>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <ng-view></ng-view>
+
+        <div id="map-container" ng-controller="MapController" class="big-map">
+            <webview src="map.html" partition="map" style="{{mapStyle()}}" map-resize></webview>
+        </div>
+
+        <!-- build:js scripts/vendor.js -->
+        <!-- bower:js -->
+        <script src="bower_components/jquery/dist/jquery.js"></script>
+        <script src="bower_components/angular/angular.js"></script>
+        <script src="bower_components/angular-animate/angular-animate.js"></script>
+        <script src="bower_components/angular-aria/angular-aria.js"></script>
+        <script src="bower_components/hammerjs/hammer.js"></script>
+        <script src="bower_components/angular-material/angular-material.js"></script>
+        <script src="bower_components/angular-route/angular-route.js"></script>
+        <script src="bower_components/pouchdb/dist/pouchdb-nightly.js"></script>
+        <script src="bower_components/angular-pouchdb/angular-pouchdb.js"></script>
+        <script src="bower_components/get-style-property/get-style-property.js"></script>
+        <script src="bower_components/get-size/get-size.js"></script>
+        <script src="bower_components/eventie/eventie.js"></script>
+        <script src="bower_components/doc-ready/doc-ready.js"></script>
+        <script src="bower_components/eventEmitter/EventEmitter.js"></script>
+        <script src="bower_components/matches-selector/matches-selector.js"></script>
+        <script src="bower_components/outlayer/item.js"></script>
+        <script src="bower_components/outlayer/outlayer.js"></script>
+        <script src="bower_components/masonry/masonry.js"></script>
+        <script src="bower_components/imagesloaded/imagesloaded.js"></script>
+        <script src="bower_components/angular-masonry/angular-masonry.js"></script>
+        <script src="bower_components/leaflet/dist/leaflet.js"></script>
+        <script src="bower_components/leaflet/dist/leaflet-src.js"></script>
+        <script src="bower_components/angular-leaflet-directive/dist/angular-leaflet-directive.js"></script>
+        <script src="bower_components/angular-post-message/dist/angular-post-message.min.js"></script>
+        <script src="bower_components/Leaflet.awesome-markers/dist/leaflet.awesome-markers.js"></script>
+        <!-- endbower -->
+        <!-- endbuild -->
+        <script src="bower_components/angularjs-indexedDB/src/indexeddb.js"></script>
+
+        <!-- build:js scripts/app.js -->
+        <script src="scripts/app.js"></script>
+        <script src="scripts/tracks/tracks.js"></script>
+        <script src="scripts/tracks/tracksController.js"></script>
+        <script src="scripts/tracks/tracksDataService.js"></script>
+        <script src="scripts/tracks/columbusTrack.js"></script>
+        <script src="scripts/map/map.js"></script>
+        <script src="scripts/settings/settingsController.js"></script>
+        <!-- endbuild -->
+    </body>
+</html>

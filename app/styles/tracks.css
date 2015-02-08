@@ -1,0 +1,59 @@
+.add-track-fab {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  font-size: 25px;
+  z-index: 6;
+}
+
+#tracks-masonry-container {
+  background: transparent;
+  z-index: 5;
+}
+
+#selected-track-container>.track-card {
+  z-index: 5;
+  opacity: 1;
+  -webkit-transform: scale(1); /* Chrome, Safari, Opera */
+  transform: scale(1);
+}
+
+#selected-track-container>.track-card.ng-hide {
+  opacity: 0;
+  -webkit-transform: scale(0); /* Chrome, Safari, Opera */
+  transform: scale(0);
+}
+
+#selected-track-container>.track-card.ng-hide-remove,
+#selected-track-container>.track-card.ng-hide-remove-active {
+  -webkit-transition: all linear 0.1s;
+  transition: all linear 0.1s;
+}
+
+.track-loading-progress {
+  position: fixed;
+  bottom: 5px;
+  left: 0px;
+  z-index: 7;
+}
+
+.track-card {
+  width: 250px;
+  background: white;
+}
+
+.track-card h2 {
+  font-weight: 200;
+  font-style: italic;
+}
+
+.track-card h2>span {
+  font-weight: 400;
+}
+
+textarea.track-edit {
+  border: none;
+  background: none;
+  line-height: 1.6;
+  width: 100%;
+}

@@ -1,0 +1,50 @@
+<!doctype html>
+<html ng-app="map" ng-csp style="height:100%">
+    <head>
+        <meta charset="utf-8">
+        <title>MaterialColumbus</title>
+
+        <link rel="stylesheet" href="bower_components/angular/angular-csp.css" />
+        <!-- build:css styles/vendor.css -->
+        <!-- bower:css -->
+        <!-- <link rel="stylesheet" href="bower_components/angular-material/angular-material.css" /> -->
+        <link rel="stylesheet" href="bower_components/leaflet/dist/leaflet.css" />
+        <link rel="stylesheet" href="bower_components/ionicons/css/ionicons.css" />
+        <link rel="stylesheet" href="bower_components/Leaflet.awesome-markers/dist/leaflet.awesome-markers.css" />
+        <!-- endbower -->
+        <!-- endbuild -->
+
+        <!-- build:css styles/main.css -->
+        <link rel="stylesheet" href="styles/main.css">
+        <link rel="stylesheet" href="styles/tracks.css">
+        <!-- endbuild -->
+    </head>
+    <body ng-controller="MapController" style="height:100%; margin: 0">
+        <leaflet style="height:100%" defaults="defaults" tiles="tiles" center="center" geojson="geojson" bounds="bounds" event-broadcast="events"></leaflet>
+
+        <!-- build:js scripts/vendor.js -->
+        <!-- bower:js -->
+        <script src="bower_components/jquery/dist/jquery.js"></script>
+        <script src="bower_components/angular/angular.js"></script>
+        <script src="bower_components/angular-animate/angular-animate.js"></script>
+        <script src="bower_components/angular-aria/angular-aria.js"></script>
+        <script src="bower_components/hammerjs/hammer.js"></script>
+        <script src="bower_components/angular-material/angular-material.js"></script>
+        <script src="bower_components/angular-route/angular-route.js"></script>
+        <script src="bower_components/pouchdb/dist/pouchdb-nightly.js"></script>
+        <script src="bower_components/angular-pouchdb/angular-pouchdb.js"></script>
+        <script src="bower_components/leaflet/dist/leaflet.js"></script>
+        <script src="bower_components/Leaflet.awesome-markers/dist/leaflet.awesome-markers.js"></script>
+        <script src="bower_components/angular-leaflet-directive/dist/angular-leaflet-directive.js"></script>
+        <script src="bower_components/angular-post-message/dist/angular-post-message.min.js"></script>
+
+        <!-- build:js scripts/app.js -->
+        <!--script src="scripts/app.js"></script>
+        <script src="scripts/tracks/tracks.js"></script>
+        <script src="scripts/tracks/tracksController.js"></script>
+        <script src="scripts/tracks/tracksDataService.js"></script>
+        <script src="scripts/tracks/columbusTrack.js"></script-->
+        <script src="scripts/map/map.js"></script>
+        <!-- endbuild -->
+    </body>
+</html>

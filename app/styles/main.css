@@ -1,0 +1,16 @@
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
+#settings {
+  font-size: 2em;
+}
+
+.big-map {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 55px;
+  margin: 0;
+  padding: 0;
+}

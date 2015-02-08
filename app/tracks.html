@@ -1,0 +1,39 @@
+<md-content id="track-cards">
+    <div layout="column" layout-margin>
+        <div ng-controller="TracksController">
+            <div id="selected-track-container" layout="row">
+                <md-card class="track-card" ng-show="selectedTrack">
+                    <md-card-content>
+                        <h2>From <span>{{selectedTrack.start}}</span> to <span>{{selectedTrack.end}}</span></h2>
+                        <h3>{{selectedTrack.date | date}}</h3>
+                        <div class="track-more">
+                            <div ng-dblclick="editTrackNotes(selectedTrack);">
+                              <p ng-hide="selectedTrack.editing">{{selectedTrack.notes}}</p>
+                              <form ng-submit="doneEditingTrackNotes(selectedTrack)" ng-show="selectedTrack.editing">
+                                <textarea ng-show="selectedTrack.editing" ng-model="selectedTrack.notes" ng-blur="doneEditingTrackNotes(selectedTrack)" ng-focus="selectedTrack.notes == editedTrackNotes" class="track-edit" />
+                              </form>
+                            </div>
+                            <md-button ng-click="deselectTrack($event)"><i class="ion-android-close"></i> close</md-button>
+                        </div>
+                    </md-card-content>
+                </md-card>
+            </div>
+
+            <div id="tracks-masonry-container" masonry reload-on-show layout="row" ng-hide="selectedTrack">
+                <md-card ng-repeat="track in tracks()" class="masonry-brick track-card" ng-click="select(track)">
+                    <md-card-content>
+                        <h2>From <span>{{track.start}}</span> to <span>{{track.end}}</span></h2>
+                        <h3>{{track.date | date}}</h3>
+                    </md-card-content>
+                </md-card>
+            </div>
+            <md-button class="md-fab md-primary add-track-fab" aria-label="Add Track" ng-click="openFileChooser()">
+                <i class="icon ion-android-add"></i>
+            </md-button>
+            <md-progress-linear md-mode="indeterminate" class="track-loading-progress" ng-show="trackLoading"></md-progress-linear>
+        </div>
+        <!-- <div flex>
+            <webview src="map.html" partition="map" style="{{mapStyle()}}" map-resize></webview>
+        </div> -->
+    </div>
+</md-content>
