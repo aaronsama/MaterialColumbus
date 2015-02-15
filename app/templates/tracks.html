@@ -1,0 +1,17 @@
+<md-content id="track-cards">
+    <div layout="column" layout-margin>
+        <div ng-controller="TracksController">
+            <div id="selected-track-container" layout="row">
+                <track-card ng-show="selectedTrack" expand="true" track="selectedTrack" onclose="deselectTrack()"></track-card>
+            </div>
+
+            <div id="tracks-masonry-container" masonry reload-on-show layout="row" ng-hide="selectedTrack">
+                <track-card track="track" ng-repeat="track in tracks()" class="masonry-brick" ng-click="select(track)"></track-card>
+            </div>
+            <md-button class="md-fab md-primary add-track-fab" aria-label="Add Track" ng-click="openFileChooser()">
+                <i class="icon ion-android-add"></i>
+            </md-button>
+            <md-progress-linear md-mode="indeterminate" class="track-loading-progress" ng-show="trackLoading"></md-progress-linear>
+        </div>
+    </div>
+</md-content>

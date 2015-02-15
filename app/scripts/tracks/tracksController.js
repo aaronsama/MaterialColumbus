@@ -52,8 +52,8 @@ angular.module('tracks')
     });
   };
 
-  $scope.deselectTrack = function($event){
-    $event.stopPropagation();
+  $scope.deselectTrack = function(){
+    //$event.stopPropagation();
     $scope.selectedTrack = null;
     reloadMasonry(0);
     postToWebview(null);
@@ -61,18 +61,6 @@ angular.module('tracks')
 
   $scope.isSelected = function(track){
     return (track === $scope.selectedTrack);
-  };
-
-  $scope.editTrackNotes = function(track){
-    track.editing = true;
-    $scope.editedTrackNotes = track.notes;
-  };
-
-  $scope.doneEditingTrackNotes = function(track){
-    TracksDataService.update(track._id, track);
-
-    track.editing = false;
-    $scope.editedTrackNotes = null;
   };
 
   $scope.tracksIn = function(year, month){

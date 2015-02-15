@@ -10,17 +10,12 @@ angular.module('materialColumbus', ['tracks', 'map', 'settings', 'ngRoute', 'ngM
   $indexedDBProvider
     .connection('material-tracklogs-meta')
       .upgradeDatabase(1, function(event, db, tx){
-        var objStore = db.createObjectStore('tracklogs', {autoIncrement: true});
+        var objStore = db.createObjectStore('tracklogs', {keyPath: 'name'});
 
         //useful indices
-        objStore.createIndex('name_idx', 'name', { unique: true });
+        //objStore.createIndex('name_idx', 'name', { unique: true });
         objStore.createIndex('start_idx', 'start', { unique: false });
         objStore.createIndex('end_idx', 'end', { unique: false });
-
-      })
-      .upgradeDatabase(2, function(event, db, tx){
-        var objStore = tx.objectStore('tracklogs');
-
         objStore.createIndex('year_idx', 'year', {unique: false});
         objStore.createIndex('month_idx', 'month', {unique: false});
       });
@@ -28,6 +23,6 @@ angular.module('materialColumbus', ['tracks', 'map', 'settings', 'ngRoute', 'ngM
   $routeProvider
     .when('/', {
       controller: 'TracksController',
-      templateUrl: 'tracks.html'
+      templateUrl: 'templates/tracks.html'
     });
 });

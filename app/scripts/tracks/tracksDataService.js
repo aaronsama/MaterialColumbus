@@ -63,6 +63,23 @@ angular.module('tracks')
   });
 
   // Tracklogs
+  var generateMetadata = function(track, file) {
+    if (file) {
+      track.uri = chrome.fileSystem.retainEntry(file);
+    }
+
+    return {
+      name: track.name,
+      date: track.points[0].timestamp,
+      year: track.points[0].timestamp.getFullYear(),
+      month: track.points[0].timestamp.getMonth() + 1,
+      start: track.start, //heads up: you can use it in the future to trim without destroying the original file
+      end: track.end,
+      notes: track.notes ? track.notes : 'Double click to add some notes',
+      uri: track.uri
+    };
+  }
+
   var updateTracks = function(){
     tracklogsMetaStore.getAll().then(function(allTracks){
       tracks = allTracks;
@@ -86,16 +103,7 @@ angular.module('tracks')
       chrome.fileSystem.getWritableEntry(ttDir, function(wTracklogsDir){
         entry.copyTo(wTracklogsDir, entry.name, function(newFile){
           //2. save metadata
-          var metadata = {
-            name: track.name,
-            date: track.points[0].timestamp,
-            year: track.points[0].timestamp.getFullYear(),
-            month: track.points[0].timestamp.getMonth() + 1,
-            start: track.start, //heads up: you can use it in the future to trim without destroying the original file
-            end: track.end,
-            notes: 'Double click to add some notes',
-            uri: chrome.fileSystem.retainEntry(newFile)
-          };
+          var metadata = generateMetadata(track, newFile);
           tracklogsMetaStore.insert(metadata).then(function(newRecordId){
             if (newRecordId){
               //3. save to cache
@@ -149,13 +157,25 @@ angular.module('tracks')
     return d.promise;
   };
 
-  // var update = function(name, data) {
-  //   db.get(name).then(function(track){
-  //     db.put(angular.extend(track, data)).then(function(response){
-  //       console.log(response);
-  //     });
-  //   });
-  // };
+  var update = function(track) {
+    var d = $q.defer();
+
+    // tracklogsMetaStore.find('name',track.name).then(function(t){
+      // t.notes = "notes changed";
+      tracklogsMetaStore.upsert([generateMetadata(track)]).then(function(resp){
+        //t.points = track.points;
+        tracksCache[track.date] = track;
+        d.resolve();
+      }, function(reason){
+        d.reject(reason);
+      });
+    // }, function(reason){
+    //   console.log(reason);
+    // });
+
+
+    return d.promise;
+  };
 
   // var del = function(track) {
   //   db.remove(track);
@@ -195,10 +215,8 @@ angular.module('tracks')
     refresh: updateTracks,
     all: all,
     add: add,
-    get: get
-
-    //,
-    // update: update,
+    get: get,
+    update: update//,
     // del: del,
     // altitudeProfile: altitudeProfile
   };
