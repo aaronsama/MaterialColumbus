@@ -89,6 +89,8 @@ angular.module('tracks')
           var metadata = {
             name: track.name,
             date: track.points[0].timestamp,
+            year: track.points[0].timestamp.getFullYear(),
+            month: track.points[0].timestamp.getMonth() + 1,
             start: track.start, //heads up: you can use it in the future to trim without destroying the original file
             end: track.end,
             notes: 'Double click to add some notes',

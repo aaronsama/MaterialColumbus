@@ -42,8 +42,6 @@ angular.module('tracks')
             end = res;
             resolve({
               name: name,
-              year: obj[0].timestamp.getFullYear(),
-              month: obj[0].timestamp.getMonth() + 1,
               date: obj[0].timestamp,
               start: start,
               end: end,
