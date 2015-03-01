@@ -6,18 +6,27 @@ angular.module('tracks')
     var rows = $fileContent.split('\n');
     rows.shift(); //remove header
 
-    var obj = [];
+    var obj = [],
+        lastPoint = {};
+
     angular.forEach(rows, function(val) {
-      if (val !== "") {
-        var o = val.split(',');
-        obj.push({
-          timestamp: $filter('columbusTimestamp')(o[2],o[3]),
-          point_type: o[1],
-          latitude: $filter('columbusLatitude')(o[4]),
-          longitude: $filter('columbusLongitude')(o[5]),
-          height: o[6],
-          heading: o[7]
-        });
+      if (val !== '') {
+        var o = val.split(','),
+            lat = $filter('columbusLatitude')(o[4]),
+            lng = $filter('columbusLongitude')(o[5]);
+
+        if (lat !== lastPoint.latitude && lng !== lastPoint.longitude) {
+          var point = {
+            timestamp: $filter('columbusTimestamp')(o[2],o[3]),
+            point_type: o[1],
+            latitude: lat,
+            longitude: lng,
+            height: o[6],
+            heading: o[7]
+          };
+          obj.push(point);
+          lastPoint = point;
+        }
       }
     });
 
