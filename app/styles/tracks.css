@@ -6,33 +6,47 @@
   z-index: 6;
 }
 
-#tracks-masonry-container {
+#tracks-masonry-container, track-card {
   background: transparent;
   z-index: 5;
 }
 
-#selected-track-container>track-card {
-  z-index: 5;
-  opacity: 1;
-  -webkit-transform: scale(1); /* Chrome, Safari, Opera */
+track-card.ng-enter {
+  -webkit-transition: all linear 0.1s;
+  transition: all linear 0.1s;
+
+  -webkit-transform: scale(0); /* Chrome, Safari, Opera */
+  transform: scale(0); /* Chrome, Safari, Opera */
+}
+
+track-card.ng-enter-active {
+  -webkit-transform: scale(1);
   transform: scale(1);
 }
 
-#selected-track-container>track-card.ng-hide {
-  opacity: 0;
-  -webkit-transform: scale(0); /* Chrome, Safari, Opera */
-  transform: scale(0);
+.track-loading-progress.ng-enter {
+  -webkit-transition: all linear 0.1s;
+  transition: all linear 0.1s;
+
+  top: -10px;
 }
 
-#selected-track-container>track-card.ng-hide-remove,
-#selected-track-container>track-card.ng-hide-remove-active {
+.track-loading-progress.ng-enter-active {
+  top: -5px;
+}
+
+.track-loading-progress.ng-leave {
   -webkit-transition: all linear 0.1s;
   transition: all linear 0.1s;
 }
 
+.track-loading-progress.ng-leave-active {
+  top: -10px;
+}
+
 .track-loading-progress {
-  position: fixed;
-  bottom: 5px;
+  position: absolute;
+  top: -5px;
   left: 0px;
   z-index: 7;
 }

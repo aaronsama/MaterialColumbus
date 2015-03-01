@@ -1,0 +1,8 @@
+<md-content id="track-details" ng-controller="TrackDetailsController">
+  <div layout="column" layout-margin>
+    <div id="selected-track-container" layout="row">
+      <track-card expand="true" track="selectedTrack" onclose="deselectTrack()" ng-if="selectedTrack"></track-card>
+    </div>
+  </div>
+  <md-progress-linear md-mode="indeterminate" class="track-loading-progress" ng-if="trackLoading"></md-progress-linear>
+</md-content>

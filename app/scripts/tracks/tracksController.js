@@ -1,9 +1,8 @@
 angular.module('tracks')
 
-.controller('TracksController', ['$scope', '$rootScope', '$mdToast', '$timeout', 'TracksDataService', 'ColumbusConverter', function($scope,$rootScope,$mdToast,$timeout,TracksDataService,columbusConverter){
+.controller('TracksController', ['$scope', '$rootScope', '$mdToast', '$timeout', '$location', 'TracksDataService', 'ColumbusConverter', function($scope,$rootScope,$mdToast,$timeout,$location,TracksDataService,columbusConverter){
   $scope.tracks = TracksDataService.all;
   $scope.trackLoading = false;
-  $scope.selectedTrack = null;
 
   $scope.openFileChooser = function(){
     chrome.fileSystem.chooseEntry({type: 'openFile', accepts: [{ mimeTypes: ['text/csv']}]}, function(readOnlyEntry) {
@@ -11,7 +10,7 @@ angular.module('tracks')
         var reader = new FileReader();
 
         reader.onerror = function(e) {
-          toast('Error loading file');
+          $mdToast.showSimple('Error loading file');
         };
 
         reader.onloadend = function(e) {
@@ -33,34 +32,16 @@ angular.module('tracks')
         $scope.trackLoading = false;
       }, function(reason){
         $scope.trackLoading = false;
-        toast('Can\'t add this track! ' + reason);
+        $mdToast.showSimple('Can\'t add this track! ' + reason);
       });
     }, function(reason){
       $scope.trackLoading = false;
-      toast('Can\'t add this track! ' + reason);
+      $mdToast.showSimple('Can\'t add this track! ' + reason);
     });
   };
 
   $scope.select = function(track){
-    $scope.selectedTrack = track;
-    $scope.trackLoading = true;
-
-    TracksDataService.get(track).then(function(trackData){
-      postToWebview(trackData);
-    }, function(reason){
-      toast(reason);
-    });
-  };
-
-  $scope.deselectTrack = function(){
-    //$event.stopPropagation();
-    $scope.selectedTrack = null;
-    reloadMasonry(0);
-    postToWebview(null);
-  };
-
-  $scope.isSelected = function(track){
-    return (track === $scope.selectedTrack);
+    $location.path('/tracks/' + track.name);
   };
 
   $scope.tracksIn = function(year, month){
@@ -77,29 +58,48 @@ angular.module('tracks')
     },delay);
   };
 
+  // var toast = function(message){
+  //   $mdToast.show(
+  //     $mdToast.simple()
+  //     .content(message)
+  //     .action('OK')
+  //     .highlightAction(false)
+  //   );
+  // };
+
+}])
+
+.controller('TrackDetailsController', ['$scope', '$routeParams', '$location', '$mdToast', 'TracksDataService', function($scope, $routeParams, $location, $mdToast, TracksDataService){
+
+  $scope.trackLoading = true;
+
+  TracksDataService.get($routeParams.trackName).then(function(trackData){
+    $scope.selectedTrack = trackData;
+    postToWebview(trackData);
+  }, function(reason){
+    $mdToast.showSimple(reason);
+  });
+
+  $scope.deselectTrack = function(){
+    postToWebview(null);
+    $location.path('/tracks');
+  };
+
   var postToWebview = function(track){
     var webview = document.querySelector('webview');
     webview.contentWindow.postMessage({track: track},'chrome-extension://laddhngkclengmbmkjhdbnddglncbejf/map.html#!/');
-  };
-
-  var toast = function(message){
-    $mdToast.show(
-      $mdToast.simple()
-      .content(message)
-      .action('OK')
-      .highlightAction(false)
-    );
   };
 
   $scope.$root.$on('$messageIncoming', function (event, data){
     $scope.trackLoading = false;
 
     if (data.error){
-      toast(data.error);
+      $mdToast.showSimple(data.error);
     } else if (data.message === 'trackDisplayed'){
-      reloadMasonry(500);
+      //reloadMasonry(500);
     }
   });
+
 }])
 
 // //Credit for ngBlur and ngFocus to https://github.com/addyosmani/todomvc/blob/master/architecture-examples/angularjs/js/directives/

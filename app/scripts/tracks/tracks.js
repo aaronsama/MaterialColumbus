@@ -1,1 +1,1 @@
-angular.module('tracks',['settings','pouchdb','ngPostMessage']);
+angular.module('tracks',['settings','ngPostMessage']);

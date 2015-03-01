@@ -32,7 +32,7 @@
             </div>
         </md-toolbar>
 
-        <ng-view></ng-view>
+        <ng-view class="view-animate"></ng-view>
 
         <div id="map-container" ng-controller="MapController" class="big-map">
             <webview src="map.html" partition="map" style="{{mapStyle()}}" map-resize></webview>
@@ -47,8 +47,6 @@
         <script src="bower_components/hammerjs/hammer.js"></script>
         <script src="bower_components/angular-material/angular-material.js"></script>
         <script src="bower_components/angular-route/angular-route.js"></script>
-        <script src="bower_components/pouchdb/dist/pouchdb-nightly.js"></script>
-        <script src="bower_components/angular-pouchdb/angular-pouchdb.js"></script>
         <script src="bower_components/get-style-property/get-style-property.js"></script>
         <script src="bower_components/get-size/get-size.js"></script>
         <script src="bower_components/eventie/eventie.js"></script>
@@ -65,9 +63,9 @@
         <script src="bower_components/angular-leaflet-directive/dist/angular-leaflet-directive.js"></script>
         <script src="bower_components/angular-post-message/dist/angular-post-message.min.js"></script>
         <script src="bower_components/Leaflet.awesome-markers/dist/leaflet.awesome-markers.js"></script>
+        <script src="bower_components/angular-indexed-db/angular-indexed-db.js"></script>
         <!-- endbower -->
         <!-- endbuild -->
-        <script src="bower_components/angular-indexedDB/src/indexeddb.js"></script>
 
         <!-- build:js scripts/app.js -->
         <script src="scripts/app.js"></script>

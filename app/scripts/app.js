@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('materialColumbus', ['tracks', 'map', 'settings', 'ngRoute', 'ngMaterial','wu.masonry','xc.indexedDB'])
+angular.module('materialColumbus', ['tracks', 'map', 'settings', 'ngRoute', 'ngMaterial','wu.masonry','indexedDB','ngAnimate'])
 
 .config(function($routeProvider, $mdThemingProvider, $indexedDBProvider) {
   $mdThemingProvider.theme('default')
@@ -21,8 +21,15 @@ angular.module('materialColumbus', ['tracks', 'map', 'settings', 'ngRoute', 'ngM
       });
 
   $routeProvider
-    .when('/', {
+    .when('/tracks', {
       controller: 'TracksController',
       templateUrl: 'templates/tracks.html'
+    })
+    .when('/tracks/:trackName', {
+      controller: 'TracksController',
+      templateUrl: 'templates/trackDetails.html'
+    })
+    .otherwise({
+      redirectTo: '/tracks'
     });
 });

@@ -3,7 +3,7 @@ angular.module('tracks')
 .factory('TracksDataService', function($window, $q, $indexedDB, $rootScope, ColumbusConverter){
 
   var OBJECT_STORE_NAME = 'tracklogs',
-      tracklogsMetaStore = $indexedDB.objectStore(OBJECT_STORE_NAME),
+      //tracklogsMetaStore = $indexedDB.objectStore(OBJECT_STORE_NAME),
       tracksCache = {},
       tDir,
       tracks = [];
@@ -81,12 +81,14 @@ angular.module('tracks')
   }
 
   var updateTracks = function(){
-    tracklogsMetaStore.getAll().then(function(allTracks){
-      tracks = allTracks;
-    }, function(reason){
-      console.log(reason);
-      tracks = [];
-    });
+    $indexedDB.openStore(OBJECT_STORE_NAME, function(tracklogsMetaStore){
+      tracklogsMetaStore.getAll().then(function(allTracks){
+        tracks = allTracks;
+      }, function(reason){
+        console.log(reason);
+        tracks = [];
+      });
+    })
   };
   //first run
   updateTracks();
@@ -104,17 +106,19 @@ angular.module('tracks')
         entry.copyTo(wTracklogsDir, entry.name, function(newFile){
           //2. save metadata
           var metadata = generateMetadata(track, newFile);
-          tracklogsMetaStore.insert(metadata).then(function(newRecordId){
-            if (newRecordId){
-              //3. save to cache
-              tracks.push(metadata);
-              tracksCache[track.date] = track;
-              deferred.resolve();
-            } else {
-              deferred.reject('Duplicate entry?');
-            }
-          }, function(reason){
-            deferred.reject(reason);
+          $indexedDB.openStore(OBJECT_STORE_NAME, function(tracklogsMetaStore){
+            tracklogsMetaStore.insert(metadata).then(function(newRecordId){
+              if (newRecordId){
+                //3. save to cache
+                tracks.push(metadata);
+                tracksCache[track.name] = track;
+                deferred.resolve();
+              } else {
+                deferred.reject('Duplicate entry?');
+              }
+            }, function(reason){
+              deferred.reject(reason);
+            });
           });
         }, function(e){
           deferred.reject(e);
@@ -125,32 +129,40 @@ angular.module('tracks')
     return deferred.promise;
   };
 
-  var get = function(track){
+  var get = function(trackName){
     var d = $q.defer();
 
-    if (tracksCache[track.date]){
+    if (tracksCache[trackName]){
       // if the track is already cached, retrieve from cache
-      d.resolve(tracksCache[track.date]);
+      d.resolve(tracksCache[trackName]);
     } else {
-      // restore the file
-      chrome.fileSystem.restoreEntry(track.uri, function(trackFile){
-        trackFile.file(function(file) {
-          var reader = new FileReader();
+      $indexedDB.openStore(OBJECT_STORE_NAME, function(tracklogsMetaStore){
+        // restore the file
+        tracklogsMetaStore.find(trackName)
+        .then(function(track){
+          chrome.fileSystem.restoreEntry(track.uri, function(trackFile){
+            trackFile.file(function(file) {
+              var reader = new FileReader();
 
-          reader.onerror = function() {
-            d.reject('Error loading file');
-          };
+              reader.onerror = function() {
+                d.reject('Error loading file');
+              };
 
-          reader.onloadend = function(e) {
-            // when finished reading, convert only the points (we already have the rest)
-            var points = ColumbusConverter.convertPoints(e.target.result);
-            // if successful, cache and return the track with points
-            tracksCache[track.date] = angular.extend(track, {points: points});
-            d.resolve(tracksCache[track.date]);
-          };
+              reader.onloadend = function(e) {
+                // when finished reading, convert only the points (we already have the rest)
+                var points = ColumbusConverter.convertPoints(e.target.result);
+                // if successful, cache and return the track with points
+                tracksCache[track.name] = angular.extend(track, {points: points});
+                d.resolve(tracksCache[track.name]);
+              };
 
-          reader.readAsText(file);
+              reader.readAsText(file);
+            });
+          });
+        }, function(reason){
+          d.reject(reason);
         });
+
       });
     }
 
@@ -164,7 +176,7 @@ angular.module('tracks')
       // t.notes = "notes changed";
       tracklogsMetaStore.upsert([generateMetadata(track)]).then(function(resp){
         //t.points = track.points;
-        tracksCache[track.date] = track;
+        tracksCache[track.name] = track;
         d.resolve();
       }, function(reason){
         d.reject(reason);
