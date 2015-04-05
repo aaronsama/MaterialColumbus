@@ -1,6 +1,6 @@
 angular.module('tracks')
 
-.directive('tracksTab', ['', function(){
+.directive('tracksTabs', ['', function(){
   // Runs during compile
   return {
     // name: '',

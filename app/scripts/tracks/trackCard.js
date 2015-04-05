@@ -15,7 +15,7 @@ angular.module('tracks')
     restrict: 'E', // E = Element, A = Attribute, C = Class, M = Comment
     // template: '',
     templateUrl: 'templates/trackCard.html',
-    controller:function ($scope, $attrs) {
+    controller: function ($scope, $attrs) {
       $scope.deselectTrack = function() {
         $scope.onclose();
       };

@@ -63,6 +63,17 @@ angular.module('tracks')
   });
 
   // Tracklogs
+  var calculateTotalDistance = function(track) {
+    var dist = 0;
+    angular.forEach(track.points,function(val,idx){
+      if (idx > 0){
+        var prevPoint = new L.LatLng(track.points[idx-1].latitude, track.points[idx-1].longitude);
+        dist += new L.LatLng(val.latitude, val.longitude).distanceTo(prevPoint);
+      }
+    });
+    return dist / 1000.0;
+  };
+
   var generateMetadata = function(track, file) {
     if (file) {
       track.uri = chrome.fileSystem.retainEntry(file);
@@ -73,12 +84,16 @@ angular.module('tracks')
       date: track.points[0].timestamp,
       year: track.points[0].timestamp.getFullYear(),
       month: track.points[0].timestamp.getMonth() + 1,
-      start: track.start, //heads up: you can use it in the future to trim without destroying the original file
+      start: track.start,
       end: track.end,
+      start_point: 0,//heads up: you can use it in the future to trim without destroying the original file
+      end_point: track.points.length - 1,
+      time: $(track.points).last()[0].timestamp - track.points[0].timestamp,
+      distance: calculateTotalDistance(track),
       notes: track.notes ? track.notes : 'Double click to add some notes',
       uri: track.uri
     };
-  }
+  };
 
   var updateTracks = function(){
     $indexedDB.openStore(OBJECT_STORE_NAME, function(tracklogsMetaStore){
@@ -88,13 +103,23 @@ angular.module('tracks')
         console.log(reason);
         tracks = [];
       });
-    })
+    });
   };
   //first run
   updateTracks();
 
   var all = function(){
     return tracks;
+  };
+
+  var years = function(){
+    var years = [];
+    angular.forEach(tracks, function(track){
+      if (years.indexOf(track.year) === -1) {
+        years.push(track.year);
+      }
+    });
+    return years;
   };
 
   var add = function(track, entry){
@@ -111,7 +136,7 @@ angular.module('tracks')
               if (newRecordId){
                 //3. save to cache
                 tracks.push(metadata);
-                tracksCache[track.name] = track;
+                tracksCache[track.name] = angular.extend(metadata, track);
                 deferred.resolve();
               } else {
                 deferred.reject('Duplicate entry?');
@@ -172,19 +197,14 @@ angular.module('tracks')
   var update = function(track) {
     var d = $q.defer();
 
-    // tracklogsMetaStore.find('name',track.name).then(function(t){
-      // t.notes = "notes changed";
-      tracklogsMetaStore.upsert([generateMetadata(track)]).then(function(resp){
-        //t.points = track.points;
+    $indexedDB.openStore(OBJECT_STORE_NAME, function(tracklogsMetaStore){
+      tracklogsMetaStore.upsert([generateMetadata(track)]).then(function(){
         tracksCache[track.name] = track;
         d.resolve();
       }, function(reason){
         d.reject(reason);
       });
-    // }, function(reason){
-    //   console.log(reason);
-    // });
-
+    });
 
     return d.promise;
   };
@@ -193,14 +213,23 @@ angular.module('tracks')
   //   db.remove(track);
   // };
 
-  var tracksIn = function(year, month){
-    if (month){
-      //query by year and month
-    } else {
-      //$indexedDb.queryBuilder().$index('date_idx').$between(...)
-    }
-  };
+  var tracksIn = function(year){
+    var d = $q.defer();
 
+    $indexedDB.openStore(OBJECT_STORE_NAME, function(tracklogsMetaStore){
+      tracklogsMetaStore.findBy('year_idx',year).then(function(tracks){
+        d.resolve(tracks);
+      }, function(reason){
+        d.reject(reason);
+      });
+    });
+    // if (month){
+    //   //query by year and month
+    // } else {
+
+    // }
+    return d.promise;
+  };
 
   // var altitudeProfile = function(track){
   //   return $q(function(resolve, reject){
@@ -226,6 +255,8 @@ angular.module('tracks')
     chooseTracklogsDir: chooseTracklogsDir,
     refresh: updateTracks,
     all: all,
+    years: years,
+    tracksIn: tracksIn,
     add: add,
     get: get,
     update: update//,

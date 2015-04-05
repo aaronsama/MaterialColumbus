@@ -2,7 +2,13 @@ angular.module('tracks')
 
 .controller('TracksController', ['$scope', '$rootScope', '$mdToast', '$timeout', '$location', 'TracksDataService', 'ColumbusConverter', function($scope,$rootScope,$mdToast,$timeout,$location,TracksDataService,columbusConverter){
   $scope.tracks = TracksDataService.all;
+  // $scope.tracksIn = TracksDataService.tracksIn;
+  $scope.years = TracksDataService.years;
   $scope.trackLoading = false;
+
+  $scope.$watch('selectedIndex', function(current){
+    $scope.selectedYear = $scope.years()[current];
+  });
 
   $scope.openFileChooser = function(){
     chrome.fileSystem.chooseEntry({type: 'openFile', accepts: [{ mimeTypes: ['text/csv']}]}, function(readOnlyEntry) {
@@ -58,15 +64,6 @@ angular.module('tracks')
     },delay);
   };
 
-  // var toast = function(message){
-  //   $mdToast.show(
-  //     $mdToast.simple()
-  //     .content(message)
-  //     .action('OK')
-  //     .highlightAction(false)
-  //   );
-  // };
-
 }])
 
 .controller('TrackDetailsController', ['$scope', '$routeParams', '$location', '$mdToast', 'TracksDataService', function($scope, $routeParams, $location, $mdToast, TracksDataService){
@@ -120,6 +117,12 @@ angular.module('tracks')
         }, 0, false);
       }
     });
+  };
+})
+
+.filter('trackDuration',function(){
+  return function(input){
+    return moment.duration(input).humanize();
   };
 });
 

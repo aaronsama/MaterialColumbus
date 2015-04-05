@@ -9,6 +9,7 @@
   		"http://mw2.google.com/",
   		"https://maps.googleapis.com/",
   		"http://*.tile.openstreetmap.org/",
+      "http://fonts.gstatic.com/",
   		{
   			"fileSystem": [
   				"write",

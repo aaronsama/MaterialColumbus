@@ -9,7 +9,7 @@ angular.module('tracks')
     var obj = [],
         lastPoint = {};
 
-    angular.forEach(rows, function(val) {
+    angular.forEach(rows, function(val, idx) {
       if (val !== '') {
         var o = val.split(','),
             lat = $filter('columbusLatitude')(o[4]),

@@ -1,0 +1,9 @@
+<md-tabs md-selected="selectedYear" md-border-bottom>
+  <md-tab ng-repeat="year in years" label="{{year}}">
+    <div class="demo-tab tab{{$index%4}}" style="padding: 25px; text-align: center;">
+      <div ng-bind="tab.content"></div>
+      <br/>
+      <md-button class="md-primary md-raised" ng-click="removeTab( tab )" ng-disabled="tabs.length <= 1">Remove Tab</md-button>
+    </div>
+  </md-tab>
+</md-tabs>

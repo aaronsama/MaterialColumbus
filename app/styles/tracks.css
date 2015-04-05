@@ -1,3 +1,7 @@
+.tracks-tab .md-header, .track-tab .md-tabs-content {
+  z-index: 1;
+}
+
 .add-track-fab {
   position: fixed;
   bottom: 30px;
@@ -6,7 +10,11 @@
   z-index: 6;
 }
 
-#tracks-masonry-container, track-card {
+.tracks-masonry-container {
+  min-height: 800px;
+}
+
+.tracks-masonry-container, track-card {
   background: transparent;
   z-index: 5;
 }
@@ -52,17 +60,28 @@ track-card.ng-enter-active {
 }
 
 track-card>md-card {
-  width: 250px;
+  width: 300px;
   background: white;
 }
 
-track-card>md-card h2 {
-  font-weight: 200;
-  font-style: italic;
+#selected-track-container track-card>md-card {
+  width: 350px;
 }
 
-track-card>md-card h2>span {
-  font-weight: 400;
+track-card>md-card h2 {
+  font-size: 32px;
+  font-weight: 200;
+  /*font-weight: 200;*/
+  /*font-style: italic;*/
+}
+
+track-card>md-card h3 {
+  color: grey;
+  /*font-weight: 400;*/
+}
+
+track-card>md-card h3>span {
+  font-weight: 300;
 }
 
 textarea.track-edit {
