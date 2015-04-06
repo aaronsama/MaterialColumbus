@@ -1,5 +1,37 @@
-.tracks-tab .md-header, .track-tab .md-tabs-content {
+md-content#track-cards, .tracks-tab, .md-tabs-content {
+  height: 100%;
+}
+
+.tracks-tab .md-header, .md-tabs-content {
   z-index: 1;
+}
+
+.md-tabs-content md-grid-list {
+  margin: 8px;
+}
+
+.track-tile {
+  background: rgba(240, 244, 195, .9);
+  padding: 8px;
+  -webkit-box-shadow: rgba(0,0,0,.5) 0px 0px 5px;
+}
+
+.track-tile md-icon {
+  width: 42px;
+  height: 42px;
+  position: absolute;
+  bottom: 3px;
+  right: 5px;
+  /*border: 1px solid gray;*/
+  border-radius: 100%;
+  background: gray;
+  padding: 5px;
+  color: white;
+  z-index: 2;
+}
+
+.track-tile md-grid-tile-footer>h3 {
+  font-weight: 700;
 }
 
 .add-track-fab {
@@ -89,4 +121,8 @@ textarea.track-edit {
   background: none;
   line-height: 1.6;
   width: 100%;
+}
+
+textarea.track-edit.title {
+  font-size: 32px;
 }

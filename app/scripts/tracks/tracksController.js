@@ -36,6 +36,7 @@ angular.module('tracks')
     .then(function(track){
       TracksDataService.add(track, entry).then(function(){
         $scope.trackLoading = false;
+        TracksDataService.refresh();
       }, function(reason){
         $scope.trackLoading = false;
         $mdToast.showSimple('Can\'t add this track! ' + reason);

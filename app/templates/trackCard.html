@@ -1,6 +1,11 @@
 <md-card>
   <md-card-content>
-    <h2>{{track.date | amCalendar}}</h2>
+    <div ng-dblclick="editTrackTitle(track);">
+      <h2 ng-hide="track.editing">{{track.title}}</h2>
+      <form ng-submit="doneEditingTrackTitle(track)" ng-show="track.editing">
+        <textarea ng-show="track.editing" ng-model="track.title" ng-blur="doneEditingTrackTitle(track)" ng-focus="track.title == editedTrackTitle" class="track-edit title" />
+      </form>
+    </div>
     <section layout="row">
       <div flex="20"><strong>From</strong></div>
       <div flex="80">{{track.start}}</div>

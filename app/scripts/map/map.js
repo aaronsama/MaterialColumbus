@@ -17,9 +17,9 @@ angular.module('map',['leaflet-directive','ngPostMessage'])//,'highcharts-ng'])
       zoom: 7
     },
     tiles: {
-      url: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      url: 'http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png',
       options: {
-        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        attribution: '&copy; OpenCycleMap, ' + 'Map data ' + '&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
       }
     }
   });

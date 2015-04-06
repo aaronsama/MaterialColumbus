@@ -20,6 +20,21 @@ angular.module('tracks')
         $scope.onclose();
       };
 
+      $scope.editTrackTitle = function(track){
+        track.editing = true;
+        $scope.editedTrackTitle = track.title;
+      };
+
+      $scope.doneEditingTrackTitle = function(track){
+        TracksDataService.update(track).then(function(){
+          track.editing = false;
+          $scope.editedTrackTitle = null;
+          TracksDataService.refresh();
+        }, function(reason){
+          console.log(reason);
+        });
+      };
+
       $scope.editTrackNotes = function(track){
         track.editing = true;
         $scope.editedTrackNotes = track.notes;
@@ -29,6 +44,7 @@ angular.module('tracks')
         TracksDataService.update(track).then(function(){
           track.editing = false;
           $scope.editedTrackNotes = null;
+          TracksDataService.refresh();
         }, function(reason){
           console.log(reason);
         });

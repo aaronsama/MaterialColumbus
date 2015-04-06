@@ -51,6 +51,7 @@ angular.module('tracks')
             end = res;
             resolve({
               name: name,
+              title: name,
               date: obj[0].timestamp,
               start: start,
               end: end,

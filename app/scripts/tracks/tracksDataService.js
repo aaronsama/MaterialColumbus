@@ -81,6 +81,7 @@ angular.module('tracks')
 
     return {
       name: track.name,
+      title: track.title,
       date: track.points[0].timestamp,
       year: track.points[0].timestamp.getFullYear(),
       month: track.points[0].timestamp.getMonth() + 1,
@@ -119,7 +120,7 @@ angular.module('tracks')
         years.push(track.year);
       }
     });
-    return years;
+    return years.slice().reverse();
   };
 
   var add = function(track, entry){

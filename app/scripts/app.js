@@ -2,10 +2,9 @@
 
 angular.module('materialColumbus', ['tracks', 'map', 'settings', 'ngRoute', 'ngMaterial','wu.masonry','indexedDB','ngAnimate','angularMoment','pippTimelineDirectives'])
 
-.config(function($routeProvider, $mdThemingProvider, $indexedDBProvider) {
+.config(function($routeProvider, $mdThemingProvider, $indexedDBProvider, $mdIconProvider) {
   $mdThemingProvider.theme('default')
-    .primaryPalette('pink')
-    .accentPalette('orange');
+    .primaryPalette('green');
 
   $indexedDBProvider
     .connection('material-tracklogs-meta')
@@ -19,6 +18,24 @@ angular.module('materialColumbus', ['tracks', 'map', 'settings', 'ngRoute', 'ngM
         objStore.createIndex('year_idx', 'year', {unique: false});
         objStore.createIndex('month_idx', 'month', {unique: false});
       });
+
+  $mdIconProvider
+    // .iconSet('action', '../styles/images/icons/material-design/action-icons.svg', 24)
+    // .iconSet('alert', '../styles/images/icons/material-design/alert-icons.svg', 24)
+    // .iconSet('av', '../styles/images/icons/material-design/av-icons.svg', 24)
+    // .iconSet('communication', '../styles/images/icons/material-design/communication-icons.svg', 24)
+    // .iconSet('content', '../styles/images/icons/material-design/content-icons.svg', 24)
+    // .iconSet('device', '../styles/images/icons/material-design/device-icons.svg', 24)
+    // .iconSet('editor', '../styles/images/icons/material-design/editor-icons.svg', 24)
+    // .iconSet('file', '../styles/images/icons/material-design/file-icons.svg', 24)
+    // .iconSet('hardware', '../styles/images/icons/material-design/hardware-icons.svg', 24)
+    // .iconSet('icons', '../styles/images/icons/material-design/icons-icons.svg', 24)
+    // .iconSet('image', '../styles/images/icons/material-design/image-icons.svg', 24)
+    .iconSet('maps', '../styles/images/icons/material-design/maps-icons.svg', 24);
+    // .iconSet('navigation', '../styles/images/icons/material-design/navigation-icons.svg', 24)
+    // .iconSet('notification', '../styles/images/icons/material-design/notification-icons.svg', 24)
+    // .iconSet('social', '../styles/images/icons/material-design/social-icons.svg', 24)
+    // .iconSet('toggle', '../styles/images/icons/material-design/toggle-icons.svg', 24);
 
   $routeProvider
     .when('/tracks', {
