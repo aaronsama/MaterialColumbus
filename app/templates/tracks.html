@@ -1,24 +1,30 @@
-<md-content id="track-cards">
-    <md-tabs class="tracks-tab md-primary md-hue-1" md-selected="selectedIndex" md-border-bottom>
-        <md-tab ng-repeat="year in years()" label="{{year}}">
-            <md-grid-list md-cols-sm="1" md-cols-md="3" md-cols-gt-md="5" md-row-height-gt-md="1:1" md-row-height="2:2" md-gutter="12px" md-gutter-gt-sm="12px">
-                <md-grid-tile class="track-tile" ng-repeat="track in tracks() | filter:{year: selectedYear}" ng-click="select(track)">
-                    <md-icon md-svg-icon="maps:directions_walk"></md-icon>
-<!--                     <p><strong>From:</strong> {{track.start}}</p>
-                    <p><strong>To:</strong> {{track.end}}</p> -->
-                    <md-grid-tile-footer>
-                        <h3><strong>{{track.title}}</strong></h3>
-                    </md-grid-tile-footer>
-                </md-grid-tile>
-            </md-grid-list>
-        <!-- <div layout="column" layout-margin> -->
+<!-- <md-content id="track-cards"> -->
+    <!-- <md-tabs class="tracks-tab md-primary md-hue-1" md-selected="selectedIndex" md-border-bottom>
+        <md-tab ng-repeat="year in years()" label="{{year}}" layout="column"> -->
+            <!-- <md-card ng-repeat="track in tracks() | filter:{year: selectedYear}" ng-click="select(track)"> -->
+<!--     <md-card ng-repeat="track in tracks()" ng-click="select(track)">
+        <md-card-content>
+            <h1>{{track.title || "No Title"}}</h1>
+            <p><strong>From:</strong> {{track.start}}</p>
+            <p><strong>To:</strong> {{track.end}}</p>
+            <md-icon md-svg-icon="maps:directions_walk"></md-icon>
+        </md-card-content>
+    </md-card> -->
+<!-- </md-content> -->
 
-            <!-- <div class="tracks-masonry-container" masonry reload-on-show layout="row" ng-hide="selectedTrack">
-                <track-card track="track" ng-repeat="track in tracks() | filter:{year: selectedYear}" class="masonry-brick" ng-click="select(track)"></track-card>
-            </div> -->
-        <!-- </div> -->
-        </md-tab>
-    </md-tabs>
+<md-content id="track-cards">
+    <md-list>
+        <md-subheader class="md-primary">Recently added tracks</md-subheader>
+        <md-list-item class="md-3-line" ng-repeat="track in tracks()" ng-click="select(track)">
+            <img src="images/icon-128.png" class="md-avatar" />
+            <div class="md-list-item-text">
+                <h3>{{track.title || "No Title"}}</h3>
+                <h4>{{track.distance | number:2}} km</h4>
+                <!-- <h4>From {{track.start}} to {{track.end}}</h4> -->
+                <p>{{track.date | date}}</p>
+            </div>
+        </md-list-item>
+    </md-list>
     <md-button class="md-fab md-primary add-track-fab" aria-label="Add Track" ng-click="openFileChooser()">
         <i class="icon ion-android-add"></i>
     </md-button>

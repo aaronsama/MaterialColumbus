@@ -1,51 +1,45 @@
-<md-card>
-  <md-card-content>
-    <div ng-dblclick="editTrackTitle(track);">
-      <h2 ng-hide="track.editing">{{track.title}}</h2>
-      <form ng-submit="doneEditingTrackTitle(track)" ng-show="track.editing">
-        <textarea ng-show="track.editing" ng-model="track.title" ng-blur="doneEditingTrackTitle(track)" ng-focus="track.title == editedTrackTitle" class="track-edit title" />
-      </form>
+<md-content layout-padding>
+  <div ng-dblclick="editTrackTitle(track);">
+    <h1 class="md-display-3" ng-hide="track.editing">{{track.title || "No Title"}}</h2>
+    <form ng-submit="doneEditingTrackTitle(track)" ng-show="track.editing">
+      <textarea ng-show="track.editing" ng-model="track.title" ng-blur="doneEditingTrackTitle(track)" ng-focus="track.title == editedTrackTitle" class="track-edit title" />
+    </form>
+  </div>
+  <section layout="row">
+    <div flex="20"><p><strong>From</strong></p></div>
+    <div flex="80"><p>{{track.start}}</p></div>
+  </section>
+  <section layout="row">
+    <div flex="20"><p><strong>To</strong></p></div>
+    <div flex="80"><p>{{track.end}}</p></div>
+  </section>
+
+  <section layout="row">
+    <div flex="20"><p><strong>Time</strong></p></div>
+    <div flex="80"><p>{{track.time | trackDuration}}</p></div>
+  </section>
+  <section layout="row">
+    <div flex="20"><p><strong>Distance</strong></p></div>
+    <div flex="80"><p>{{track.distance | number:2}} km</p></div>
+  </section>
+  <section layout="row">
+    <div flex>
+      <div ng-dblclick="editTrackNotes(track);">
+        <p ng-hide="track.editing">{{track.notes}}</p>
+        <form ng-submit="doneEditingTrackNotes(track)" ng-show="track.editing">
+          <textarea ng-show="track.editing" ng-model="track.notes" ng-blur="doneEditingTrackNotes(track)" ng-focus="track.notes == editedTrackNotes" class="track-edit" />
+        </form>
+      </div>
     </div>
-    <section layout="row">
-      <div flex="20"><strong>From</strong></div>
-      <div flex="80">{{track.start}}</div>
-    </section>
-    <section layout="row">
-      <div flex="20"><strong>To</strong></div>
-      <div flex="80">{{track.end}}</div>
-    </section>
+  </section>
 
-    <div class="track-more" ng-if="expand">
-      <section layout="row">
-        <div flex="20"><strong>Time</strong></div>
-        <div flex="80">{{track.time | trackDuration}}</div>
-      </section>
-      <section layout="row">
-        <div flex="20"><strong>Distance</strong></div>
-        <div flex="80">{{track.distance | number:2}} km</div>
-      </section>
-      <section layout="row">
-        <div flex>
-          <div ng-dblclick="editTrackNotes(track);">
-            <p ng-hide="track.editing">{{track.notes}}</p>
-            <form ng-submit="doneEditingTrackNotes(track)" ng-show="track.editing">
-              <textarea ng-show="track.editing" ng-model="track.notes" ng-blur="doneEditingTrackNotes(track)" ng-focus="track.notes == editedTrackNotes" class="track-edit" />
-            </form>
-          </div>
-        </div>
-      </section>
+  <!-- TODO activity type directive -->
+  <section layout="column">
+    <activity-type-select ng-model="track.activityType"></activity-type-select>
+  </section>
 
-    </div>
-    <section layout="row" layout-align="center center">
-      <!-- <md-button ng-if="!expand" ui-sref='tracks.details'>details</md-button> -->
-      <md-button ng-if="expand" ng-click="deselectTrack($event)"><i class="ion-android-close"></i> close</md-button>
-    </section>
-  </md-card-content>
-</md-card>
-
-<!-- <md-card>
-  <md-card-content>
-    <h2>From <span>{{selectedTrack.start}}</span> to <span>{{selectedTrack.end}}</span></h2>
-    <h3>{{selectedTrack.date | date}}</h3>
-  </md-card-content>
-</md-card> -->
+  <section layout="row" layout-align="center center">
+    <!-- <md-button ng-if="!expand" ui-sref='tracks.details'>details</md-button> -->
+    <md-button ng-if="expand" ng-click="deselectTrack($event)"><i class="ion-android-close"></i> close</md-button>
+  </section>
+</md-content>

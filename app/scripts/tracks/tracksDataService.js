@@ -113,6 +113,14 @@ angular.module('tracks')
     return tracks;
   };
 
+  var recent = function(){
+    if (tracks.length > 10){
+      return tracks.slice(tracks.length - 10);
+    } else {
+      return tracks;
+    }
+  };
+
   var years = function(){
     var years = [];
     angular.forEach(tracks, function(track){
@@ -256,6 +264,7 @@ angular.module('tracks')
     chooseTracklogsDir: chooseTracklogsDir,
     refresh: updateTracks,
     all: all,
+    recent: recent,
     years: years,
     tracksIn: tracksIn,
     add: add,

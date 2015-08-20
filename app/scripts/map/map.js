@@ -12,8 +12,8 @@ angular.module('map',['leaflet-directive','ngPostMessage'])//,'highcharts-ng'])
       touchZoom: true
     },
     center: {
-      lat: 52.374004,
-      lng: 4.890359,
+      lat: 46,
+      lng: 11,
       zoom: 7
     },
     tiles: {

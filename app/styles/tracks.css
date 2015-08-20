@@ -1,13 +1,6 @@
-md-content#track-cards, .tracks-tab, .md-tabs-content {
+md-content#track-cards, md-content#track-details {
   height: 100%;
-}
-
-.tracks-tab .md-header, .md-tabs-content {
-  z-index: 1;
-}
-
-.md-tabs-content md-grid-list {
-  margin: 8px;
+  background: transparent;
 }
 
 .track-tile {
@@ -16,22 +9,27 @@ md-content#track-cards, .tracks-tab, .md-tabs-content {
   -webkit-box-shadow: rgba(0,0,0,.5) 0px 0px 5px;
 }
 
-.track-tile md-icon {
-  width: 42px;
-  height: 42px;
+#track-cards md-card, #track-details md-card {
+  position: relative;
+}
+
+#track-cards md-card-content {
+  padding-right: 50px;
+}
+
+#track-cards md-card-content>md-icon {
+  width: 24px;
+  height: 24px;
   position: absolute;
-  bottom: 3px;
-  right: 5px;
+  top: 10px;
+  right: 10px;
   /*border: 1px solid gray;*/
   border-radius: 100%;
   background: gray;
-  padding: 5px;
+  padding: 6px;
   color: white;
-  z-index: 2;
-}
-
-.track-tile md-grid-tile-footer>h3 {
-  font-weight: 700;
+  /*z-index: 2;*/
+  opacity: .6;
 }
 
 .add-track-fab {
@@ -51,53 +49,17 @@ md-content#track-cards, .tracks-tab, .md-tabs-content {
   z-index: 5;
 }
 
-track-card.ng-enter {
-  -webkit-transition: all linear 0.1s;
-  transition: all linear 0.1s;
-
-  -webkit-transform: scale(0); /* Chrome, Safari, Opera */
-  transform: scale(0); /* Chrome, Safari, Opera */
-}
-
-track-card.ng-enter-active {
-  -webkit-transform: scale(1);
-  transform: scale(1);
-}
-
-.track-loading-progress.ng-enter {
-  -webkit-transition: all linear 0.1s;
-  transition: all linear 0.1s;
-
-  top: -10px;
-}
-
-.track-loading-progress.ng-enter-active {
-  top: -5px;
-}
-
-.track-loading-progress.ng-leave {
-  -webkit-transition: all linear 0.1s;
-  transition: all linear 0.1s;
-}
-
-.track-loading-progress.ng-leave-active {
-  top: -10px;
-}
-
 .track-loading-progress {
-  position: absolute;
-  top: -5px;
+  position: fixed;
+  width: 100%;
+  top: 54px;
   left: 0px;
   z-index: 7;
 }
 
 track-card>md-card {
-  width: 300px;
+  /*width: 300px;*/
   background: white;
-}
-
-#selected-track-container track-card>md-card {
-  width: 350px;
 }
 
 track-card>md-card h2 {

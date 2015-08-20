@@ -12,8 +12,6 @@
         <link rel="stylesheet" href="bower_components/leaflet/dist/leaflet.css" />
         <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.css" />
         <link rel="stylesheet" href="bower_components/Leaflet.awesome-markers/dist/leaflet.awesome-markers.css" />
-        <link rel="stylesheet" href="bower_components/TimelineJS/build/css/timeline.css" />
-        <link rel="stylesheet" href="bower_components/TimelineJS/build/css/themes/font/Helvetica.css" />
         <!-- endbower -->
         <!-- endbuild -->
 
@@ -34,11 +32,15 @@
             </div>
         </md-toolbar>
 
-        <ng-view class="view-animate"></ng-view>
-
-        <div id="map-container" ng-controller="MapController" class="big-map">
-            <webview src="map.html" partition="map" style="{{mapStyle()}}" map-resize></webview>
+        <div layout="row" style="height: 100%">
+            <div flex="30" style="height: calc(100% - 64px); z-index: 2">
+                <ng-view class="view-animate"></ng-view>
+            </div>
+            <div flex="70" id="map-container" ng-controller="MapController" class="big-map">
+                <webview src="map.html" partition="map" style="{{mapStyle()}}" map-resize></webview>
+            </div>
         </div>
+
 
         <!-- build:js scripts/vendor.js -->
         <!-- bower:js -->
@@ -68,8 +70,6 @@
         <script src="bower_components/moment/moment.js"></script>
         <script src="bower_components/angular-moment/angular-moment.js"></script>
         <script src="bower_components/ui-router/release/angular-ui-router.js"></script>
-        <script src="bower_components/TimelineJS/build/js/timeline.js"></script>
-        <script src="bower_components/angular-timelinejs/build/angular-timelinejs.js"></script>
         <!-- endbower -->
         <!-- endbuild -->
 
@@ -83,6 +83,7 @@
         <script src="scripts/tracks/tracksNavigator.js"></script>
         <script src="scripts/map/map.js"></script>
         <script src="scripts/settings/settingsController.js"></script>
+        <script src="scripts/activity/activity.js"></script>
         <!-- endbuild -->
     </body>
 </html>

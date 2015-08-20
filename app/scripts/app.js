@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('materialColumbus', ['tracks', 'map', 'settings', 'ngRoute', 'ngMaterial','wu.masonry','indexedDB','ngAnimate','angularMoment','pippTimelineDirectives'])
+angular.module('materialColumbus', ['tracks', 'map', 'settings', 'activity', 'ngRoute', 'ngMaterial','wu.masonry','indexedDB','ngAnimate','angularMoment'])
 
 .config(function($routeProvider, $mdThemingProvider, $indexedDBProvider, $mdIconProvider) {
   $mdThemingProvider.theme('default')

@@ -1,7 +1,7 @@
 angular.module('tracks')
 
 .controller('TracksController', ['$scope', '$rootScope', '$mdToast', '$timeout', '$location', 'TracksDataService', 'ColumbusConverter', function($scope,$rootScope,$mdToast,$timeout,$location,TracksDataService,columbusConverter){
-  $scope.tracks = TracksDataService.all;
+  $scope.tracks = TracksDataService.recent;
   // $scope.tracksIn = TracksDataService.tracksIn;
   $scope.years = TracksDataService.years;
   $scope.trackLoading = false;
@@ -51,8 +51,8 @@ angular.module('tracks')
     $location.path('/tracks/' + track.name);
   };
 
-  $scope.tracksIn = function(year, month){
-    TracksDataService.tracksIn(year, month).then(function(result){
+  $scope.tracksIn = function(year){
+    TracksDataService.tracksIn(year).then(function(result){
 
     }, function(reason){
 
