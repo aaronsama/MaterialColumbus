@@ -1,45 +1,96 @@
-<md-content layout-padding>
-  <div ng-dblclick="editTrackTitle(track);">
-    <h1 class="md-display-3" ng-hide="track.editing">{{track.title || "No Title"}}</h2>
-    <form ng-submit="doneEditingTrackTitle(track)" ng-show="track.editing">
-      <textarea ng-show="track.editing" ng-model="track.title" ng-blur="doneEditingTrackTitle(track)" ng-focus="track.title == editedTrackTitle" class="track-edit title" />
-    </form>
-  </div>
-  <section layout="row">
-    <div flex="20"><p><strong>From</strong></p></div>
-    <div flex="80"><p>{{track.start}}</p></div>
+<md-content>
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <md-button class="md-icon-button" aria-label="Settings" ng-click="deselectTrack($event)">
+        <md-icon md-svg-icon="navigation:arrow_back"></md-icon>
+      </md-button>
+      <h2>
+        <span>Track Details</span>
+      </h2>
+      <span flex></span>
+<!--       <md-button class="md-icon-button" aria-label="Favorite">
+        <md-icon md-svg-icon="img/icons/favorite.svg" style="color: greenyellow;"></md-icon>
+      </md-button>
+      <md-button class="md-icon-button" aria-label="More">
+        <md-icon md-svg-icon="img/icons/more_vert.svg"></md-icon>
+      </md-button> -->
+    </div>
+  </md-toolbar>
+  <section layout-padding>
+    <div ng-dblclick="editTrackTitle(track);">
+      <h1 class="md-display-3 track-title" ng-hide="track.editing">
+        {{track.title || "No Title"}}
+        <md-tooltip>
+          Double click to edit
+        </md-tooltip>
+      </h1>
+      <form ng-submit="doneEditingTrackTitle(track)" ng-show="track.editing">
+        <textarea ng-show="track.editing" ng-model="track.title" ng-blur="doneEditingTrackTitle(track)" ng-focus="track.title == editedTrackTitle" class="track-edit title"></textarea>
+      </form>
+    </div>
+    <h2 class="md-subhead">
+      {{track.date | date}}
+    </h2>
   </section>
-  <section layout="row">
-    <div flex="20"><p><strong>To</strong></p></div>
-    <div flex="80"><p>{{track.end}}</p></div>
+  <section layout-padding>
+    <p class="md-body-1">
+      <strong>From</strong><br>
+      {{track.start}}
+    </p>
+    <p class="md-body-1">
+      <strong>To</strong><br>
+      {{track.end}}
+    </p>
   </section>
 
+  <md-divider></md-divider>
+
   <section layout="row">
-    <div flex="20"><p><strong>Time</strong></p></div>
-    <div flex="80"><p>{{track.time | trackDuration}}</p></div>
-  </section>
-  <section layout="row">
-    <div flex="20"><p><strong>Distance</strong></p></div>
-    <div flex="80"><p>{{track.distance | number:2}} km</p></div>
-  </section>
-  <section layout="row">
-    <div flex>
-      <div ng-dblclick="editTrackNotes(track);">
-        <p ng-hide="track.editing">{{track.notes}}</p>
-        <form ng-submit="doneEditingTrackNotes(track)" ng-show="track.editing">
-          <textarea ng-show="track.editing" ng-model="track.notes" ng-blur="doneEditingTrackNotes(track)" ng-focus="track.notes == editedTrackNotes" class="track-edit" />
-        </form>
-      </div>
+    <div flex="50">
+      <p class="md-body-1" style="text-align: center">
+        <strong>Time</strong><br>
+        {{track.time | trackDuration}}
+      </p>
+    </div>
+    <div flex="50">
+      <p class="md-body-1" style="text-align: center">
+        <strong>Distance</strong><br>
+        {{track.distance | number:2}} km
+      </p>
     </div>
   </section>
 
-  <!-- TODO activity type directive -->
-  <section layout="column">
+  <md-divider></md-divider>
+
+  <section layout-padding class="md-body-1">
     <activity-type-select ng-model="track.activityType"></activity-type-select>
   </section>
 
-  <section layout="row" layout-align="center center">
-    <!-- <md-button ng-if="!expand" ui-sref='tracks.details'>details</md-button> -->
-    <md-button ng-if="expand" ng-click="deselectTrack($event)"><i class="ion-android-close"></i> close</md-button>
+  <section layout-padding class="md-body-1">
+    <form ng-submit="doneEditingTrackNotes(track)">
+      <md-input-container flex>
+        <label>
+          Track notes
+        </label>
+        <textarea ng-model="track.notes" ng-blur="doneEditingTrackNotes(track)" ng-focus="track.notes == editedTrackNotes" />
+      </md-input-container>
+    </form>
+  </section>
+
+  <md-divider></md-divider>
+
+  <section layout-padding class="md-body-1">
+    <h3 class="md-title">
+      Trim Track
+    </h3>
+    <div layout>
+      <div flex="10" layout layout-align="center center">
+        <span class="md-body-1">Start</span>
+      </div>
+      <md-slider flex ng-model="trim.start" min="0" max="{{trim.end || track.points.length-1}}" aria-label="trim start"></md-slider>
+      <div flex="10" layout layout-align="center center">
+        <span class="md-body-1">{{trim.start}}</span>
+      </div>
+    </div>
   </section>
 </md-content>

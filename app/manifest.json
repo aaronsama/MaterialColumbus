@@ -49,7 +49,8 @@
   				"name": "map",
   				"accessible_resources": [
   					"map.html",
-  					"scripts/map/map.js",
+            "scripts/map/map.js",
+  					"scripts/map/**/*.js",
   					"bower_components/**/*",
   					"styles/*"
   				]

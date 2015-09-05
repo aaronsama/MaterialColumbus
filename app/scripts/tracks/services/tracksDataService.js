@@ -1,6 +1,8 @@
+'use strict';
+
 angular.module('tracks')
 
-.factory('TracksDataService', function($window, $q, $indexedDB, $rootScope, ColumbusConverter){
+.service('TracksDataService', function($window, $q, $indexedDB, $rootScope, ColumbusConverter){
 
   var OBJECT_STORE_NAME = 'tracklogs',
       //tracklogsMetaStore = $indexedDB.objectStore(OBJECT_STORE_NAME),
@@ -99,7 +101,9 @@ angular.module('tracks')
   var updateTracks = function(){
     $indexedDB.openStore(OBJECT_STORE_NAME, function(tracklogsMetaStore){
       tracklogsMetaStore.getAll().then(function(allTracks){
-        tracks = allTracks;
+        tracks = allTracks.sort(function(t1, t2){
+          return t1.date - t2.date;
+        });
       }, function(reason){
         console.log(reason);
         tracks = [];

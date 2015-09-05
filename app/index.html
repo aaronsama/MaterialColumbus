@@ -21,46 +21,34 @@
         <!-- endbuild -->
     </head>
     <body>
-        <md-toolbar ng-controller="SettingsController">
-            <div class="md-toolbar-tools">
-                <span>Material Columbus</span>
-                <!-- fill up the space between left and right area -->
-                <span flex></span>
-                <md-button md-no-ink id="settings" ng-click="selectTracklogsDir()">
-                    <i class="ion-android-settings"></i>
-                </md-button>
-            </div>
-        </md-toolbar>
 
         <div layout="row" style="height: 100%">
             <div flex="30" style="height: calc(100% - 64px); z-index: 2">
                 <ng-view class="view-animate"></ng-view>
             </div>
-            <div flex="70" id="map-container" ng-controller="MapController" class="big-map">
-                <webview src="map.html" partition="map" style="{{mapStyle()}}" map-resize></webview>
+            <div flex="70" id="map-container" class="big-map">
+                <md-toolbar ng-controller="SettingsController">
+                    <div class="md-toolbar-tools">
+                        <!-- <span>Material Columbus</span> -->
+                        <!-- fill up the space between left and right area -->
+                        <span flex></span>
+                        <md-button md-no-ink id="settings" ng-click="selectTracklogsDir()">
+                            <i class="ion-android-settings"></i>
+                        </md-button>
+                    </div>
+                </md-toolbar>
+                <webview src="map.html" partition="map" style="height: 100%; width: 100%;"></webview>
             </div>
         </div>
 
 
         <!-- build:js scripts/vendor.js -->
         <!-- bower:js -->
-        <script src="bower_components/jquery/dist/jquery.js"></script>
         <script src="bower_components/angular/angular.js"></script>
         <script src="bower_components/angular-animate/angular-animate.js"></script>
         <script src="bower_components/angular-aria/angular-aria.js"></script>
         <script src="bower_components/angular-material/angular-material.js"></script>
         <script src="bower_components/angular-route/angular-route.js"></script>
-        <script src="bower_components/get-style-property/get-style-property.js"></script>
-        <script src="bower_components/get-size/get-size.js"></script>
-        <script src="bower_components/eventie/eventie.js"></script>
-        <script src="bower_components/doc-ready/doc-ready.js"></script>
-        <script src="bower_components/eventEmitter/EventEmitter.js"></script>
-        <script src="bower_components/matches-selector/matches-selector.js"></script>
-        <script src="bower_components/outlayer/item.js"></script>
-        <script src="bower_components/outlayer/outlayer.js"></script>
-        <script src="bower_components/masonry/masonry.js"></script>
-        <script src="bower_components/imagesloaded/imagesloaded.js"></script>
-        <script src="bower_components/angular-masonry/angular-masonry.js"></script>
         <script src="bower_components/leaflet/dist/leaflet.js"></script>
         <script src="bower_components/leaflet/dist/leaflet-src.js"></script>
         <script src="bower_components/angular-leaflet-directive/dist/angular-leaflet-directive.js"></script>
@@ -75,14 +63,19 @@
 
         <!-- build:js scripts/app.js -->
         <script src="scripts/app.js"></script>
+        <!-- tracks -->
         <script src="scripts/tracks/tracks.js"></script>
-        <script src="scripts/tracks/tracksController.js"></script>
-        <script src="scripts/tracks/tracksDataService.js"></script>
-        <script src="scripts/tracks/columbusTrack.js"></script>
-        <script src="scripts/tracks/trackCard.js"></script>
-        <script src="scripts/tracks/tracksNavigator.js"></script>
-        <script src="scripts/map/map.js"></script>
+        <script src="scripts/tracks/controllers/tracksController.js"></script>
+        <script src="scripts/tracks/controllers/trackDetailsController.js"></script>
+        <script src="scripts/tracks/directives/ngBlur.js"></script>
+        <script src="scripts/tracks/directives/ngFocus.js"></script>
+        <script src="scripts/tracks/directives/trackCard.js"></script>
+        <script src="scripts/tracks/filters/trackDuration.js"></script>
+        <script src="scripts/tracks/services/tracksDataService.js"></script>
+        <script src="scripts/tracks/services/columbusConverter.js"></script>
+        <!-- settings -->
         <script src="scripts/settings/settingsController.js"></script>
+        <!-- activity types -->
         <script src="scripts/activity/activity.js"></script>
         <!-- endbuild -->
     </body>

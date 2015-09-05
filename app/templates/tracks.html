@@ -13,8 +13,14 @@
 <!-- </md-content> -->
 
 <md-content id="track-cards">
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Your tracks</h2>
+            <span flex></span>
+        </div>
+    </md-toolbar>
     <md-list>
-        <md-subheader class="md-primary">Recently added tracks</md-subheader>
+        <md-subheader class="md-primary">Most recent tracks</md-subheader>
         <md-list-item class="md-3-line" ng-repeat="track in tracks()" ng-click="select(track)">
             <img src="images/icon-128.png" class="md-avatar" />
             <div class="md-list-item-text">

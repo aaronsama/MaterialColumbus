@@ -40,15 +40,6 @@ md-content#track-cards, md-content#track-details {
   z-index: 6;
 }
 
-.tracks-masonry-container {
-  min-height: 800px;
-}
-
-.tracks-masonry-container, track-card {
-  background: transparent;
-  z-index: 5;
-}
-
 .track-loading-progress {
   position: fixed;
   width: 100%;
@@ -76,6 +67,10 @@ track-card>md-card h3 {
 
 track-card>md-card h3>span {
   font-weight: 300;
+}
+
+.track-title {
+  margin-bottom: 0;
 }
 
 textarea.track-edit {

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('materialColumbus', ['tracks', 'map', 'settings', 'activity', 'ngRoute', 'ngMaterial','wu.masonry','indexedDB','ngAnimate','angularMoment'])
+angular.module('materialColumbus', ['tracks', 'settings', 'activity', 'ngRoute', 'ngMaterial','indexedDB','ngAnimate','angularMoment'])
 
 .config(function($routeProvider, $mdThemingProvider, $indexedDBProvider, $mdIconProvider) {
   $mdThemingProvider.theme('default')
@@ -31,8 +31,8 @@ angular.module('materialColumbus', ['tracks', 'map', 'settings', 'activity', 'ng
     // .iconSet('hardware', '../styles/images/icons/material-design/hardware-icons.svg', 24)
     // .iconSet('icons', '../styles/images/icons/material-design/icons-icons.svg', 24)
     // .iconSet('image', '../styles/images/icons/material-design/image-icons.svg', 24)
-    .iconSet('maps', '../styles/images/icons/material-design/maps-icons.svg', 24);
-    // .iconSet('navigation', '../styles/images/icons/material-design/navigation-icons.svg', 24)
+    .iconSet('maps', '../styles/images/icons/material-design/maps-icons.svg', 24)
+    .iconSet('navigation', '../styles/images/icons/material-design/navigation-icons.svg', 24);
     // .iconSet('notification', '../styles/images/icons/material-design/notification-icons.svg', 24)
     // .iconSet('social', '../styles/images/icons/material-design/social-icons.svg', 24)
     // .iconSet('toggle', '../styles/images/icons/material-design/toggle-icons.svg', 24);
